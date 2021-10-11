@@ -1,0 +1,4 @@
+ckpt/
+__pycache__/
+*.npy
+data/orig_data
