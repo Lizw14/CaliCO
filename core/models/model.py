@@ -143,16 +143,20 @@ class GQA_model(nn.Module):
         self.reasoning = DifferentiableReasoning(input_dims=model_configs.input_dims, 
             hidden_dims = model_configs.hidden_dims, 
             gdef = gdef)
-        self.hier_superviser = Hier_superviser(attribute_taxonomy=self.reasoning.sym_attribute_taxonomy,
-            data_hypernym_json_pth='data/vcml/gqa_hypernym.json',
-            data_instance_json_pth='data/vcml/gqa_isinstanceof.json')
+        self.hier_superviser = None
+        if model_configs.if_hier:
+            self.hier_superviser = Hier_superviser(attribute_taxonomy=self.reasoning.sym_attribute_taxonomy,
+                data_hypernym_json_pth='data/vcml/gqa_hypernym.json',
+                data_instance_json_pth='data/vcml/gqa_isinstanceof.json')
 
     def forward(self, feed_dict):
         programs, buffers, answers = self.reasoning(feed_dict) 
         assert(len(answers[0])==len(feed_dict['qid']))
         raw_loss = self.qa_loss(feed_dict, answers) # a dict containing list of {answer, loss, is_correct}
         loss = sum(raw_loss['loss'])/len(programs)
-        hier_loss, is_corrects = self.hier_superviser(num_sample = 25)
+        if self.hier_superviser is not None:
+            hier_loss, is_corrects = self.hier_superviser(num_sample = 25)
+            loss = loss + hier_loss
         if self.training:
             for logname in raw_loss['loss_type']:
                 for k in raw_loss['loss_type'][logname]:
@@ -161,9 +165,9 @@ class GQA_model(nn.Module):
                         raw_loss['loss_type'][logname][k] = sum(raw_loss['loss_type'][logname][k]) / num
                     else:
                         raw_loss['loss_type'][logname][k] = None
-            raw_loss['loss_type']['hier'] = {'basic': loss.detach().item(), 'hier': hier_loss.detach().item()}
-        raw_loss['is_correct_hier'] = is_corrects
-        loss = loss + hier_loss
+            if self.hier_superviser is not None:
+                raw_loss['loss_type']['hier'] = {'basic': loss.detach().item(), 'hier': hier_loss.detach().item()}
+                raw_loss['is_correct_hier'] = is_corrects
         return loss, [raw_loss, buffers]
 
     def save_ckpt(self, checkpoint, ckpt_pth):

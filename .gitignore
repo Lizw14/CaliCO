@@ -1,4 +1,5 @@
-ckpt/
 __pycache__/
-*.npy
+ckpt/
 data/orig_data
+*.npy
+*.h5

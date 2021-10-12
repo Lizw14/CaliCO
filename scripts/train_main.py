@@ -52,7 +52,7 @@ parser.add_argument('--gdef_pth', default='data/define_prog_12.json')
 parser.add_argument('--sgg_vocab_pth', default='/home/zhuowan/zhuowan/gqa_project/Scene-Graph-Benchmark.pytorch/datasets/GQA/gqa_vocab_thres1.json')
 parser.add_argument('--input_dims', metavar='N', type=int, nargs='+', default=[2048,2048])
 parser.add_argument('--hidden_dims', metavar='N', type=int, nargs='+', default=[256,256])
-
+parser.add_argument('--if_hier', type=bool, default=False, help='whether to use hierarchical supervision')
 args = parser.parse_args()
 
 class Trainer():
@@ -94,7 +94,7 @@ class Trainer():
         if args.pretrained_path is not None:
             ckpt_pth = args.pretrained_path
         model_configs = namedtuple("ARGS", 
-            ['input_dims', 'hidden_dims'])(args.input_dims, args.hidden_dims)
+            ['input_dims', 'hidden_dims', 'if_hier'])(args.input_dims, args.hidden_dims, args.if_hier)
         if args.is_gtencode:
             model_configs.input_dims[0] = len(val_dataset.unwrapped.sg_all_concepts)
             model_configs.input_dims[1] = len(val_dataset.unwrapped.sg_all_concepts)
