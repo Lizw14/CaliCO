@@ -14,7 +14,7 @@ export PATH=<path_to_jacinle>/bin:$PATH
 
 ## Data preparation
 Download the [GQA dataset](https://cs.stanford.edu/people/dorarad/gqa/download.html) (ver1.2) into `data/orig_data`.
-Download the extracted images features from [this link)](http://cs.jhu.edu/~zhuowan/CaliCO/sgg_features.h5) into `data/features`.
+Download the extracted images features from [this link](http://cs.jhu.edu/~zhuowan/CaliCO/sgg_features.h5) into `data/features`.
 The `data` directory should look like:
 ```
 data/orig_data/questions1.2
