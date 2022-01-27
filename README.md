@@ -4,7 +4,7 @@ This is pytorch implementation for ICCV21 paper: [Calibrating Concepts and Opera
 ## Prerequisites
 The codebase is tested with Python3.8 and Pytorch1.7.
 
-Part of this codebase is built on [NSCL](https://github.com/vacancy/NSCL-PyTorch-Release). Great thanks to the authors! Please refer to the prerequisites to NSCL codebase. Specially, install [Jacinle](https://github.com/vacancy/Jacinle):
+Part of this codebase is built on [NSCL](https://github.com/vacancy/NSCL-PyTorch-Release). Great thanks to the authors! Please refer to the prerequisites of NSCL codebase. Specially, install [Jacinle](https://github.com/vacancy/Jacinle):
 ```
 git clone https://github.com/vacancy/Jacinle --recursive
 export PATH=<path_to_jacinle>/bin:$PATH
@@ -14,7 +14,7 @@ export PATH=<path_to_jacinle>/bin:$PATH
 
 ## Data preparation
 Download the [GQA dataset](https://cs.stanford.edu/people/dorarad/gqa/download.html) (ver1.2) into `data/orig_data`.
-Download the extracted images features from [Google Drive link (coming soon)]() into `data/features`.
+Download the extracted images features from [this link)](http://cs.jhu.edu/~zhuowan/CaliCO/sgg_features.h5) into `data/features`.
 The `data` directory should look like:
 ```
 data/orig_data/questions1.2
@@ -31,13 +31,13 @@ data/features
 ```
 
 ## Testing
-Download the trained model from [Google Drive link (coming soon)]() and put it under `ckpt/cco_trained`. Then run the following command. It should reach accuracy 55.81 (on testdev split).
+Download the trained model from [this link](http://cs.jhu.edu/~zhuowan/CaliCO/cco_trained.zip) and put it under `ckpt/cco_trained`. Then run the following command. It should reach accuracy 55.81 (on testdev split).
 ```
 sh scripts/cco_test.sh
 ```
 
 ## Training
-Run the following command to train;
+Run the following command to train:
 ```
 sh scripts/cco_train.sh
 ```
