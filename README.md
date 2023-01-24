@@ -42,6 +42,9 @@ Run the following command to train:
 sh scripts/cco_train.sh
 ```
 
+## Analysis
+The dataset splits (filtered by operation weights, easy/hard) as in Table 4 and Fig 5 can be downloaded [here](http://cs.jhu.edu/~zhuowan/CaliCO/analysis.zip).
+
 ## Citation
 ```
 @InProceedings{li2021calibrating,
